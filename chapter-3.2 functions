@@ -1,0 +1,46 @@
+/* 
+**Functions**
+Rust code uses snake case as the conventional style for function and variable names, in which all letters are lowercase and underscores separate words.
+*/
+fn main() {
+    another_function(5);
+}
+fn another_function(x: i32) {
+    println!("The value of x is: {x}");
+}
+
+/*
+**Statements and Expressions**
+->Statements are instructions that perform some action and do not return a value.
+->Expressions evaluate to a resultant value.
+*/
+//Functions with Return Values
+fn five() -> i32 {
+    5
+}
+fn main() {
+    let x = five();
+    println!("The value of x is: {x}");
+}
+
+//this function call works and returns 6 
+fn main() {
+    let x = plus_one(5);
+
+    println!("The value of x is: {x}");
+}
+
+fn plus_one(x: i32) -> i32 {
+    x + 1
+}
+
+// but if we add semicolan it changes from an expression to statement so this will not compile 
+fn main() {
+    let x = plus_one(5);
+
+    println!("The value of x is: {x}");
+}
+
+fn plus_one(x: i32) -> i32 {
+    x + 1; // this is a statement which cant return a value
+}
