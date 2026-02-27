@@ -1,0 +1,86 @@
+**Structs**
+
+Structs are similar to tuples, in that both hold multiple related values. Like tuples, the pieces of a struct can be different types.
+Unlike with tuples, in a struct you’ll name each piece of data so it’s clear what the values mean.
+Adding these names means that structs are more flexible than tuples: You don’t have to rely on the order of the data to specify or access the values of an instance.
+
+-> To define a struct, we enter the keyword struct and name the entire struct
+DEFINE:
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+USE:
+fn main() {
+    let user1 = User {
+        active: true,
+        username: String::from("someusername123"),
+        email: String::from("someone@example.com"),
+        sign_in_count: 1,
+    };
+}
+
+ **Tuple Structs**
+ To define a tuple struct, start with the struct keyword and the struct name followed by the types in the tuple.
+ For example, here we define and use two tuple structs named Color and Point:
+
+struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+fn main() {
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+}
+
+**Printing Stricts**
+Rust does include functionality to print out debugging information, but we have to explicitly opt in to make that functionality available for our struct. 
+To do that, we add the outer attribute #[derive(Debug)] just before the struct definition,
+
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    println!("rect1 is {rect1:?}");
+}
+OUTPUT : rect1 is Rectangle { width: 30, height: 50 }
+
+When we have larger structs, it’s useful to have output that’s a bit easier to read; in those cases, we can use {:#?} instead of {:?} to print 
+rect1 is Rectangle {
+    width: 30,
+    height: 50,
+}
+
+
+Another way to print out a value using the Debug format is to use the dbg! macro, which takes ownership of an expression (as opposed to println!, which takes a reference),
+prints the file and line number of where that dbg! macro call occurs in your code along with the resultant value of that expression, and returns ownership of the value.
+
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let scale = 2;
+    let rect1 = Rectangle {
+        width: dbg!(30 * scale),
+        height: 50,
+    };
+    dbg!(&rect1);
+}
+OUTPUT:
+[src/main.rs:10:16] 30 * scale = 60
+[src/main.rs:14:5] &rect1 = Rectangle {
+    width: 60,
+    height: 50,
+}
+
+Note: Calling the dbg! macro prints to the standard error console stream (stderr), as opposed to println!, which prints to the standard output console stream (stdout).
+
